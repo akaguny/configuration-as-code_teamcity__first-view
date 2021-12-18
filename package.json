@@ -1,0 +1,23 @@
+{
+  "name": "configuration-as-code_teamcity__first-view",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "present": "marp -p --watch slides"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akaguny/configuration-as-code_teamcity__first-view.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akaguny/configuration-as-code_teamcity__first-view/issues"
+  },
+  "homepage": "https://github.com/akaguny/configuration-as-code_teamcity__first-view#readme",
+  "devDependencies": {
+    "@marp-team/marp-cli": "^1.5.0"
+  }
+}
