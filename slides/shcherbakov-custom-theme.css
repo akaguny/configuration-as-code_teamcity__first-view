@@ -6,6 +6,7 @@
   --slides-background: white;
   --slides-width: 1280px;
   --slides-height: 960px;
+  --header-height: 40px;
 }
 
 body {
@@ -14,7 +15,6 @@ body {
 
 section {
   width: var(--slides-width);
-  height: var(--slides-height);
   font-size: 40px;
   padding: 0px;
   justify-content: start;
@@ -31,7 +31,7 @@ h2 {
   color: aliceblue;
   display: block;
   background-color: teal;
-  height: 40px;
+  height: var(--header-height);
   width: var(--slides-width);
 }
 
@@ -41,4 +41,18 @@ h2 {
 
 footer {
   bottom: 10px;
+}
+
+.columns {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.columns > p {
+  display: block;
+}
+
+.columns > *:first-child img {
+  max-height: calc(var(--slides-height) - var(--header-height) - 300px);
 }
