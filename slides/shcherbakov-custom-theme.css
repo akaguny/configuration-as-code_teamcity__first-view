@@ -1,0 +1,44 @@
+/* @theme shcherbakov-custom-theme */
+
+@import 'default';
+
+:root {
+  --slides-background: white;
+  --slides-width: 1280px;
+  --slides-height: 960px;
+}
+
+body {
+  background-color: var(--slides-background);
+}
+
+section {
+  width: var(--slides-width);
+  height: var(--slides-height);
+  font-size: 40px;
+  padding: 0px;
+  justify-content: start;
+  margin: 10px;
+}
+
+section.cover {
+  justify-content: center;
+  flex-direction: column;
+}
+
+h2 {
+  font-size: 30px;
+  color: aliceblue;
+  display: block;
+  background-color: teal;
+  height: 40px;
+  width: var(--slides-width);
+}
+
+h2 {
+  font-size: 30px;
+}
+
+footer {
+  bottom: 10px;
+}
