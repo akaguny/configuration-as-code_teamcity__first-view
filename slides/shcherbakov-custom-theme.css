@@ -14,7 +14,6 @@ body {
 }
 
 section {
-  width: var(--slides-width);
   font-size: 40px;
   padding: 0px;
   justify-content: start;
@@ -43,16 +42,16 @@ footer {
   bottom: 10px;
 }
 
-.columns {
+.two-columns {
   height: 100%;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.columns > p {
+.two-columns > p {
   display: block;
 }
 
-.columns > *:first-child img {
+.two-columns > *:first-child img {
   max-height: calc(var(--slides-height) - var(--header-height) - 300px);
 }

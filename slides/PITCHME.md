@@ -1,5 +1,5 @@
 ---
-title: Configuration as code: Teamcity. Первое знакомство
+title: "Configuration as code: Teamcity. Первое знакомство"
 marp: true
 theme: shcherbakov-custom-theme
 headingDivider: 2
@@ -16,7 +16,7 @@ html: true
 
 <!-- _footer: test -->
 
-<div class="columns">
+<div class="two-columns">
 
 ![](./assets/IMG20211213151405_cropped.jpg)
 
@@ -29,23 +29,109 @@ html: true
 
 ## Teamcity vs Другие CI
 
-Исторически так сложилось, что Teamcity в отличии от TravisCI и ему подобных не позволял работать с конфигурацией без UI.
++ Teamcity - UI first
 
-Но шло время, сборки становились всё более изощрёнными:
+<!--
+... 
+в отличие от TravisCI, GithubActions и других Teamcity - UI first
+...
+это даёт низкий порог входа -
+вам не надо изучать специфику экосистемы для того чтобы выполнить сборку условного npm пакета.
+...
+Пока звучит хорошо, даже отлично!
+Но в чём подвох?
+ -->
+
+![h:400](./assets/film-poster-click.jpg)
++ Отлично!
+
+<!-- _footer: Фото-постер: https://www.kinopoisk.ru/picture/430560/ -->
+
+## Teamcity - про крупный enterprise
 
 - шаблонные сборки
 - мета-раннеры
-- pipeline с реверсивными зависимостями
+- наследование
+- pipeline
+- параметры сборки
+- аудит
 
-Начиная с Teamcity 10 версии появился программный способ настройки конфигурации.
+<!--
+Teamcity - про крупный enterprise
+У вас будут десятки проектов с десятками сборок в каждом
+В ходе работы вы наверняка столкнётесь с классическими проблемами
+...
+дублирование - teamcity предложит:
+- шаблонные сборки
+- мета-раннеры
+- наследование
+...
+зависимости - teamcity предложит:
+- pipeline и реверсивные параметры
+...
+кастомизацию поведения без изменения логики:
+- параметры сборок
+...
+разбор ошибок и поиск ответственных
+- аудит
+ -->
 
-DSL построенный на основе продвигаемого Jetbrains языка Kotlin, а в версии 2018.x DSL довели до промышленного состояния, покрыв оставшиеся кейсы конфигурирования.
+## История Teamcity. Configuration as code
 
-Само версионирование представляет собой двухсторонний биндинг конфигурации Teamcity server и конфигурации под контролем системы контроля версий.
+![bg](./assets/raskopki.JPG)
 
-## Форматы версионирования настроек Teamcity
+<!-- _footer: <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/%D0%90%D1%80%D1%85%D0%B5%D0%BE%D0%BB%D0%BE%D0%B3%D1%96%D1%8F.JPG/1024px-%D0%90%D1%80%D1%85%D0%B5%D0%BE%D0%BB%D0%BE%D0%B3%D1%96%D1%8F.JPG">фото: википедия</a> -->
 
-Доступные на момент эксплуатации версии Teamcity 2021.2
+## 2015 XML
+
+[хранение настроек teamcity в системах контроля версий Teamcity 9.0](https://confluence.jetbrains.com/display/TCD9/What%27s+New+in+TeamCity+9.0#What'sNewinTeamCity9.0-StoringprojectsettingsinGitandMercurial)
+
+<!-- cамо версионирование представляет собой биндинг конфигурации Teamcity server и конфигурации под контролем системы контроля версий. -->
+
+## Параллельная ветвь эволюции. Наработки сообщества
+* XML отстой, Kotlin DSL ещё нет
+* [Golang client for TeamCity REST API](https://github.com/cvbarros/go-teamcity) + [Terraform](https://www.terraform.io/) = [Terraform Provider for Jetbrains TeamCity CI server](https://github.com/cvbarros/terraform-provider-teamcity)
+
+<!--
+шёл 2017 и kolinDSL был ещё не готов
+А что предложило сообщество спросите вы?
+Сообщество предложило по сути свой DSL им стал Terraform Provider for Jetbrains TeamCity CI server
+
+terraform provider по факту предоставляет тотже DSL, только применяет его в Teamcity через HTTP API Teamcity
+ -->
+
+<!-- _footer: <a href="https://cvbarros.io/2018/11/building-builds---teamcity-pipelines-as-code-using-terraform/">Building Builds - TeamCity Pipelines as Code using Terraform</a> -->
+
+## 2017 KotlinDSL
+* [Teamcity DSL](https://confluence.jetbrains.com/display/TCD10/What%27s+New+in+TeamCity+10.0#What'sNewinTeamCity10.0-DSLforTeamCityProjectConfiguration)
+
+* ![h:600](./assets/Kotlin_teamcity_10_2017_1.png)
+
+<!-- начиная с Teamcity 10 появилась возможность хранения и взаимодейтсвия с конфигурацией через KotlinDSL -->
+
+## 2018 Portable KotinDSL
+[Portable Teamcity DSL](https://confluence.jetbrains.com/display/TCD18/What%27s+New+in+TeamCity+2018.1#What'sNewinTeamCity2018.1-PortableKotlinDSLformat)
+
+* settings.kts содержит конфигурацию целиком
+* uuid и id для сущностей опциональны
+* настройка версионирования проекта и настройки VCS не могут быть изменены из DSL
+
+<!-- в версии 2018.x DSL довели до промышленного состояния, покрыв оставшиеся кейсы.
+Добавили portable режим работы с DSL.
+...
+* при первом коммите настроек
+...
+* uuid и id для сущностей опциональны
+Больше нет необходимости зашиваться на идентификаторы
+...
+Но какие ограничения?
+* настройка версионирования проекта и настройки VCS не могут быть изменены из DSL.
+...
+Также плохая новость состоит в том, что есть ряд сущностей, которые не попадают под общую концепцию и никогда не будут отражены в DSL в полной мере.
+Но хорошая это то, что эти сущности могут быть представлены в DSL в привычном для него виде. Об этом позже, когда будем рассматривать шаблонные сборки и метараннеры.
+ -->
+
+## Teamcity 2021
 
 |                        | KotlinDSL | xml(plain) |
 | ---------------------- | --------- | ---------- |
@@ -54,17 +140,16 @@ DSL построенный на основе продвигаемого Jetbrain
 | расширяемость          | ✅        | ❌         |
 | обратная совместимость | ✅        | ✅/❌      |
 
-<!-- Пример DSL конфигурации + представление её же ввиде xml -->
+* никто не любит xml
+<!-- 
+А что в настоящем?
+Вернёмся в 2021, последняя версия на момент рассказа доклада Teamcity 2021.2
+Как видно из таблички XML проигрывает по всем фронтам.
+....
+Кроме того ИМХО конечно, но никто не любит XML
 
-Стоит отметить, что
-
-1. для работы с настройками в формате xml возможно добавить расширенные возможности. Это например проект Terraform Provider TeamCity. Но как пишет сам автор в своём мотивационном посте проект был сделан за долго до полноценной реализации конфигурирования через Kotlin DSL.
-
-<!-- Пример конфигурации с использованием Terraform Provider -->
-
-2. сравнение возможно немного не честное, т.к. в случае с Kotlin DSL мы пишем инструкции, а в случае с XML готовый артефакт конфигурации. Более правильно было-бы сравнивать Terraform Provider Teamcity и KotlinDSL
-3. используя Kotlin DSL можно и нужно отказываться от шаблонных сборок, мета-раннеров в пользу расширения DSL.
-4. никто не любит xml (ИМХО)
+Пример DSL конфигурации + представление её же ввиде xml
+-->
 
 ## Kotlin DSL
 
@@ -112,7 +197,28 @@ DSL построенный на основе продвигаемого Jetbrain
 
 ## Шаблонная сборка. Teamcity DSL vs UI
 
+вот пример сборки с использованием шаблонной
+
 ![](./assets/slide8.jpg)
+
+внимание вопрос: что делают отключённые шаги?
+
+Да, мы можем походить по каждому из шагов и попробовтаь составить представление примерно так:
+коллаж из картинок или одна над другой?
+- картинка 1 - шаг 1 в окне браузера
+- картинка 2 - шаг 2 в окне браузера
+- картинка 3 - шаг 3 в окне браузера
+
+Но хотим ли?
+Я нет.
+Вместо этого обратимся к коду
+
+## Шаблонная сборка. Использование шаблона
+![](./assets/slide11.jpg)
+
+на строке происходит подключение шаблона
+
+использование https://stash.billing.ru/projects/~alexey.shcherbakov/repos/teamcity-dsl-first-look/browse/.teamcity/settings.kts?at=355bc7dd0baedeb171627328c51109ec05adecc2#80
 
 ## Шаблонная сборка. Регистрация шаблона в DSL
 
@@ -124,22 +230,24 @@ DSL построенный на основе продвигаемого Jetbrain
 ![](./assets/slide10.jpg)
 имплементация https://stash.billing.ru/projects/~alexey.shcherbakov/repos/teamcity-dsl-first-look/browse/.teamcity/settings.kts?at=355bc7dd0baedeb171627328c51109ec05adecc2#94
 
+отличия от любой другой сборки:
+
+ссылка на шаблон
 отличия от любой другой сборки
 
 вместо BuildType( тут Template(
 у шагов (steps) явно заданы ID
 
-## Шаблонная сборка. Использование шаблона
+## Шаблонная сборка. Итоги
+* DSL позволяет отследить шаблон - источник ❌
+* Шаблонные сборки с DSL всё ещё отстой ❌
+* шаблонные сборки не нужны если вы используете KotlinDSL ✅
 
-![](./assets/slide11.jpg)
 
-использование https://stash.billing.ru/projects/~alexey.shcherbakov/repos/teamcity-dsl-first-look/browse/.teamcity/settings.kts?at=355bc7dd0baedeb171627328c51109ec05adecc2#80
-
-отличия от любой другой сборки:
-
-ссылка на шаблон
 явное отключение шагов, заимствованных из шаблона по ID
 Шаблонные конфигурации это legacy
+
+## не используйте шаблонные сборки
 
 Since DSL is a code in Kotlin programming language, all paradigms supported by this language are available. For instance, instead of using TeamCity templates, one can create a function or class which will encapsulate project common settings. For those who have programming skills it allows for more natural reuse of build configuration settings.
 
