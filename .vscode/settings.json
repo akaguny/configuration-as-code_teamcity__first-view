@@ -2,5 +2,5 @@
     "markdown.marp.themes": [
       "./slides/shcherbakov-custom-theme.css"
     ],
-    "markdown.marp.enableHtml": true
+    "markdown.marp.enableHtml": true,
   }

@@ -1,4 +1,7 @@
-/* @theme shcherbakov-custom-theme */
+/* 
+@theme shcherbakov-custom-theme
+@auto-scaling true
+*/
 
 @import 'default';
 
@@ -26,6 +29,7 @@ section.cover {
 }
 
 h2 {
+  padding-left: 10px;
   font-size: 30px;
   color: aliceblue;
   display: block;
@@ -54,4 +58,20 @@ footer {
 
 .two-columns > *:first-child img {
   max-height: calc(var(--slides-height) - var(--header-height) - 300px);
+}
+
+/* line-numbers, see https://github.com/marp-team/marp/discussions/164 */
+pre ol {
+  all: unset;
+  display: block;
+  counter-reset: line-number 0;
+}
+pre ol li {
+  all: unset;
+  display: list-item;
+  list-style: none;
+}
+pre ol li::before {
+  content: counter(line-number) ': ';
+  counter-increment: line-number;
 }
