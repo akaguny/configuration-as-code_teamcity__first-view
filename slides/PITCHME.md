@@ -420,16 +420,18 @@ object ChainFirstBuild : BuildType({
 - settings.kts
 -->
 
-## 3 рецепта испльзования версионирования настроек
+## 3 рецепта использования версионирования настроек
 
 | изменение / подход | git first | ui first | mixed (git + ui) |
 | ------------------ | --------- | -------- | ---------------- |
-| ui                 | ✅        | ❌       | ✅ + патчи       |
+| ui                 | ❌        | ✅       | ✅ + патчи       |
 | code               | ✅        | ❌       | ✅ + патчи       |
 
 <!--
 git first,  ui first, mixed (git + ui)
  -->
+
+ <!-- _footer: synchronization modes : https://www.jetbrains.com/help/teamcity/2021.2/storing-project-settings-in-version-control.html#Synchronizing+Settings+with+VCS -->
 
 ## UI first
 
