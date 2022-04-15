@@ -565,10 +565,8 @@ Teamcity увидит ваш файл settings.kts
 5. Аудит
 
 ## Ссылки:
-- [Цикл статей по построению сборок с использованием Teamcity DSL](https://blog.jetbrains.com/teamcity/2019/03/configuration-as-code-part-1-getting-started-with-kotlin-dsl/)
--  [Документация Kotlin DSL](https://www.jetbrains.com/help/teamcity/kotlin-dsl.html)
+- [jetbrains 2019: Цикл статей по построению сборок с использованием Teamcity DSL](https://blog.jetbrains.com/teamcity/2019/03/configuration-as-code-part-1-getting-started-with-kotlin-dsl/)
+- [jetbrains 2022: Kotlin DSL for Beginners: Recommended Refactorings](https://blog.jetbrains.com/teamcity/2021/04/kotlin-dsl-for-beginners-recommended-refactorings/)
+- [Документация Kotlin DSL](https://www.jetbrains.com/help/teamcity/kotlin-dsl.html) также доступна с вкладки Version Settings вашего проекта (конкретно под вашу версию Teamcity)
 - [swampUP 2019 | Learn How to Use Kotlin DSL for Configuring the Builds in TeamCity](https://www.youtube.com/watch?v=VTjzP5Aytj4)
 - [Рецепты TeamCity. Доклад Яндекс.Такси](https://habr.com/ru/company/yandex/blog/466615/)
-
-
-
